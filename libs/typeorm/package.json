@@ -1,0 +1,31 @@
+{
+    "name": "@beherit/typeorm",
+    "type": "module",
+    "private": true,
+    "license": "MIT",
+    "version": "0.0.1",
+    "exports": {
+        ".": "./dist/src/index.js",
+        "./typeorm-connection": "./dist/src/typeorm-connection.js",
+        "./entities/*": "./dist/src/entities/*.js"
+    },
+    "typesVersions": {
+        "*": {
+            "*": [
+                "./dist/src/*.d.ts"
+            ]
+        }
+    },
+    "scripts": {
+        "build": "tsc",
+        "migration:generate": "node ./dist/generateMigration.js",
+        "migration:run": "npx typeorm-ts-node-esm migration:run -d ./src/index.ts",
+        "migration:revert": "npx typeorm-ts-node-esm migration:revert -d ./src/index.ts"
+    },
+    "dependencies": {
+        "ts-node": "^10.0.0",
+        "typeorm": "^0.3.10",
+        "typescript": "^4.3.5",
+        "@beherit/config": "*"
+    }
+}

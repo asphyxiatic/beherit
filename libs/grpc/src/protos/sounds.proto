@@ -1,0 +1,90 @@
+syntax = "proto3";
+
+package sounds;
+
+service SoundsService{
+    rpc FindOne (FindOneRequest) returns (FindOneResponse) {}
+    rpc Find (FindRequest) returns (FindResponse) {}
+    rpc Save (SaveRequest) returns (SaveResponse) {}
+    rpc Delete (DeleteRequest) returns (Void) {}
+}
+
+
+//FindOne
+
+message FindOneRequest{
+    string soundId = 1;
+}
+
+message FindOneResponse{
+    optional Sound data = 1;
+}
+
+//Delete
+
+message DeleteRequest{
+    string soundId = 1;
+}
+
+
+//Save
+
+message SaveRequest{
+    optional string id = 1;
+    string name = 2;
+    string key = 3; 
+    string genre = 4;
+    string userId = 5;
+    int32 length = 6;
+    bool loaded = 7;
+}
+
+
+message SaveResponse{
+    Sound data = 1;
+}
+
+//Find
+
+message FindRequest{
+    PageOptionsDto pageOptions = 1;
+    string userId = 2;
+}
+
+message FindResponse{
+    repeated Sound sounds = 1;
+    PageMeta meta = 2;
+}
+
+//Common messages
+
+message Void{}
+
+//Entity
+
+message Sound{
+    optional string id = 1;
+    string name = 2;
+    string key = 3;
+    string userId = 4;
+    string genre = 5;
+    int32 length = 6;
+    bool loaded = 7;
+}
+
+// Dto
+
+message PageOptionsDto{
+    optional string order = 1;
+    optional int32 page = 2;
+    optional int32 take = 3;
+}
+
+message PageMeta{
+    int32 page = 1;
+    int32 take = 2;
+    int32 itemCount = 3;
+    int32 pageCount = 4;
+    bool hasPreviousPage = 5;
+    bool hasNextPage = 6;
+}

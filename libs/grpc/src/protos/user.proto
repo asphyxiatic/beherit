@@ -1,0 +1,148 @@
+syntax = "proto3";
+
+package user;
+
+service UserService{
+    rpc GetUrlToDownloadSound (GetUrlSoundRequest) returns (GetUrlSoundResponse) {}
+    rpc GetListSounds (GetListSoundsRequest) returns (GetListSoundsResponse) {}
+    rpc ChangingAvatar (ChangingAvatarRequest) returns (ChangingAvatarResponse) {}
+    rpc ChangePassword (ChangePasswordRequest) returns (Void) {}
+    rpc FindOne (FindOneRequest) returns (FindOneResponse) {}
+    rpc Save (PartialUser) returns (User) {}
+    rpc GetUserProfile (GetUserProfileRequest) returns (GetUserProfileResponse) {}
+    rpc GetAvatar (GetAvatarRequset) returns (GetAvatarResponse) {}
+    rpc ChangeNickname (ChangeNicknameRequest) returns (Void) {}
+}
+
+//GetUrlToDownloadSound
+
+message GetUrlSoundRequest{
+    string soundId = 1;
+}
+
+message GetUrlSoundResponse{
+    SoundInfo soundInfo = 1;
+}
+
+//GetListSounds
+
+message GetListSoundsRequest{
+    PageOptionsDto pageOptions = 1;
+    string userId = 2;
+}
+
+message GetListSoundsResponse{
+    repeated SoundInfo soundsInfo = 1;
+    PageMeta meta = 3;
+}
+
+//ChangingAvatar
+
+message ChangingAvatarRequest{
+    string userId = 1;
+    bytes avatar = 2;
+    string extension = 3;
+}
+
+message ChangingAvatarResponse {
+    string url = 1;
+}
+
+//ChangePassword
+
+message ChangePasswordRequest{
+    string userId = 1;
+    string currentPassword = 2;
+    string newPassword = 3;
+}
+
+//FindOne
+message FindOneRequest{
+    string email = 1;
+}
+
+message FindOneResponse{
+   optional User data = 1; 
+}
+
+
+//GetAvatar
+
+message GetAvatarRequset{
+    string email = 1;
+}
+
+message GetAvatarResponse{
+    string url = 1;
+}
+
+//GetUserProfile
+
+message GetUserProfileRequest{
+    string userId = 1;
+}
+
+message GetUserProfileResponse{
+    string email = 1;
+    string username = 2;
+    string avatar = 3;
+}
+
+//ChangeNickname
+
+message ChangeNicknameRequest{
+    string userId = 1;
+    string newNickname = 2;
+}
+
+//Common messages
+
+message Void{}
+
+//Entity
+
+message User{
+    string id = 1;
+    string username = 2;
+    string email = 3;
+    string password = 4;
+    string avatar = 5;
+    string refreshToken = 6;
+    string recoveryToken = 7;
+}
+
+message PartialUser{
+    optional string id = 1;
+    string username = 2;
+    string email = 3;
+    string password = 4;
+    string avatar = 5;
+    string refreshToken = 6;
+    string recoveryToken = 7;
+}
+
+//Dto
+
+message PageOptionsDto{
+    optional string order = 1;
+    optional int32 page = 2;
+    optional int32 take = 3;
+}
+
+message PageMeta{
+    int32 page = 1;
+    int32 take = 2;
+    int32 itemCount = 3;
+    int32 pageCount = 4;
+    bool hasPreviousPage = 5;
+    bool hasNextPage = 6;
+}
+
+message SoundInfo{
+    string name = 1;
+    string genre = 2;
+    int32 length = 3;
+    string url = 4;
+    bool loaded = 5;
+    string id = 6;
+}

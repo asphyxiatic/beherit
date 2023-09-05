@@ -1,0 +1,109 @@
+syntax = "proto3";
+
+package auth;
+
+service AuthService {
+  rpc Register (RegisterRequest) returns (RegisterResponse) {}
+  rpc Login (LoginRequest) returns (LoginResponse) {}
+  rpc Validate (ValidateRequest) returns (ValidateResponse) {}
+  rpc UpdateTokens (UpdateTokensRequest) returns (UpdateTokensResponse) {}
+  rpc GetLinkToResetPassword (GetLinkToResetPasswordRequest) returns (Void) {}
+  rpc ResetPassword (ResetPasswordRequest) returns (Void) {}
+  rpc VerificationRecoveryToken (VerificationRecoveryTokenRequest) returns (VerificationRecoveryTokenResponse) {}
+}
+
+
+//VerificationRecoveryToken
+message VerificationRecoveryTokenRequest{
+  string token = 1;
+}
+
+message VerificationRecoveryTokenResponse{
+  bool isValid = 1;
+}
+
+// Register
+
+message RegisterRequest {
+  string email = 1;
+  string username = 2;
+  string password = 3;
+}
+
+message RegisterResponse {
+  string refreshToken = 1;
+  string token = 2;
+  UserInfo userInfo = 3;
+}
+
+
+// Login
+
+message LoginRequest {
+  string email = 1;
+  string password = 2;
+}
+
+message LoginResponse {
+  string refreshToken = 1;
+  string token = 2;
+  UserInfo userInfo = 3;
+}
+
+// Validate
+
+message ValidateRequest {
+  string token = 1;
+}
+
+message ValidateResponse {
+  string userId = 1;
+}
+
+// UpdateTokens
+
+message UpdateTokensRequest{
+  string refreshToken = 1;
+}
+
+message UpdateTokensResponse{
+  string refreshToken = 1;
+  string token = 2;
+  UserInfo userInfo = 3;
+}
+
+//GetLinkToResetPassword
+
+message GetLinkToResetPasswordRequest{
+  string email = 1;
+}
+
+
+//ResetPassword
+message ResetPasswordRequest{
+  string token = 1;
+  string newPassword = 2;
+
+}
+
+//CommonMessage
+
+message Void{}
+
+
+message UserInfo{
+  string email = 1;
+  string username = 2;
+  string avatar = 3;
+}
+
+//Entity 
+message User{
+  string id = 1;
+  string username = 2;
+  string email = 3;
+  string password = 4;
+  string avatar = 5;
+  string refreshToken = 6;
+  string recoveryToken = 7;
+}

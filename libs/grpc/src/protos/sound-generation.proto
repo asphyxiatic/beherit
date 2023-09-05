@@ -1,0 +1,19 @@
+syntax = "proto3";
+
+package ml;
+
+service MlService{
+    rpc Generate (GenerateRequest) returns (Void) {}
+}
+
+//Generate
+message GenerateRequest{
+    string name = 1;
+    string genre = 2; 
+    int32 length = 3;
+    string userId = 4;
+}
+
+
+//Common message
+message Void{}
